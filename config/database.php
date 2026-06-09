@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'host' => getenv('DB_HOST') ?: 'localhost',
-    'port' => getenv('DB_PORT') ?: '3306',
-    'database' => getenv('DB_NAME') ?: 'skywings_flights',
-    'username' => getenv('DB_USER') ?: 'root',
-    'password' => getenv('DB_PASS') ?: '',
+    'host' => 'sql111.infinityfree.com',
+    'port' => '3306',
+    'database' => 'if0_42142313_flight_bookingss',
+    'username' => 'if0_42142313',
+    'password' => 'flyhub1234',
     'charset' => 'utf8mb4',
     'options' => [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
