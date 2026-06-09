@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'name' => 'SkyWings',
-    'tagline' => 'Your Journey Begins Here',
+    'name' => 'FLYHUB',
+    'tagline' => 'Fly Easy, Book Smart',
     'url' => getenv('APP_URL') ?: 'http://localhost',
     'timezone' => 'UTC',
     'debug' => filter_var(getenv('APP_DEBUG') ?: false, FILTER_VALIDATE_BOOLEAN),

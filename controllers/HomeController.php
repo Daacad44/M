@@ -10,7 +10,7 @@ class HomeController extends BaseController
         $faqs = Faq::getActive();
         $avgRating = Review::getAverageRating();
 
-        view('home.index', compact('airports', 'airlines', 'destinations', 'faqs', 'avgRating'));
+        view('home.index', compact('airports', 'airlines', 'destinations', 'faqs', 'avgRating'), 'home');
     }
 
     public function about(): void
