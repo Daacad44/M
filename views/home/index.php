@@ -1,182 +1,186 @@
 <?php $pageTitle = 'Home'; ?>
 
+<?php
+$featuredDestinations = [
+    [
+        'city' => 'New York',
+        'country' => 'USA',
+        'price' => 350,
+        'image' => 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&h=300&fit=crop',
+        'code' => 'JFK',
+    ],
+    [
+        'city' => 'London',
+        'country' => 'UK',
+        'price' => 420,
+        'image' => 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=300&fit=crop',
+        'code' => 'LHR',
+    ],
+    [
+        'city' => 'Paris',
+        'country' => 'France',
+        'price' => 380,
+        'image' => 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&h=300&fit=crop',
+        'code' => 'CDG',
+    ],
+    [
+        'city' => 'Dubai',
+        'country' => 'UAE',
+        'price' => 290,
+        'image' => 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=300&fit=crop',
+        'code' => 'DXB',
+    ],
+];
+
+foreach ($featuredDestinations as &$fd) {
+    foreach ($destinations as $dest) {
+        if (strtoupper($fd['code']) === strtoupper($dest['code'])) {
+            $fd['airport_id'] = $dest['id'];
+            break;
+        }
+    }
+}
+unset($fd);
+?>
+
 <!-- Hero Section -->
-<section class="hero-section">
-    <div class="hero-overlay"></div>
+<section class="flyhub-hero">
+    <div class="flyhub-hero-bg"></div>
+    <div class="flyhub-hero-overlay"></div>
     <div class="container position-relative">
-        <div class="row min-vh-75 align-items-center">
-            <div class="col-lg-7 text-white mb-4 mb-lg-0">
-                <h1 class="display-4 fw-bold mb-3">Discover the World with <?= e(config('app.name')) ?></h1>
-                <p class="lead mb-4">Book flights to 100+ destinations. Best prices, flexible options, and 24/7 support.</p>
-                <div class="d-flex gap-4 hero-stats">
-                    <div><h3 class="fw-bold mb-0">500+</h3><small>Daily Flights</small></div>
-                    <div><h3 class="fw-bold mb-0">50+</h3><small>Airlines</small></div>
-                    <div><h3 class="fw-bold mb-0"><?= $avgRating ?: '4.8' ?></h3><small>Rating</small></div>
+        <div class="flyhub-hero-content">
+            <div class="flyhub-hero-badge">
+                <i class="fas fa-plane"></i>
+                BEST WAY TO FLY
+            </div>
+            <h1 class="flyhub-hero-title">
+                Book Flights to<br>
+                <span class="flyhub-hero-accent">Anywhere in the World</span>
+            </h1>
+            <p class="flyhub-hero-subtitle">
+                Find the best deals on flights, hotels, and car rentals. Compare prices from hundreds of airlines and travel sites.
+            </p>
+        </div>
+    </div>
+
+    <div class="container flyhub-search-container">
+        <?php $filters = ['trip_type' => 'round_trip']; partial('flyhub-search-form', compact('airports', 'filters')); ?>
+    </div>
+</section>
+
+<!-- Features Bar -->
+<section class="flyhub-features-section">
+    <div class="container">
+        <div class="flyhub-features-bar">
+            <div class="flyhub-feature-item">
+                <div class="flyhub-feature-icon">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <div class="flyhub-feature-text">
+                    <strong>Best Price Guarantee</strong>
+                    <span>Find the best deals</span>
                 </div>
             </div>
-        </div>
-        <div class="search-box-card">
-            <?php $filters = []; partial('flight-search-form', compact('airports', 'filters')); ?>
+            <div class="flyhub-feature-item">
+                <div class="flyhub-feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="flyhub-feature-text">
+                    <strong>Secure Booking</strong>
+                    <span>100% secure payment</span>
+                </div>
+            </div>
+            <div class="flyhub-feature-item">
+                <div class="flyhub-feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="flyhub-feature-text">
+                    <strong>24/7 Customer Support</strong>
+                    <span>We're here to help</span>
+                </div>
+            </div>
+            <div class="flyhub-feature-item">
+                <div class="flyhub-feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="flyhub-feature-text">
+                    <strong>Easy Booking</strong>
+                    <span>Book in minutes</span>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- Popular Destinations -->
-<section class="py-5">
+<section class="flyhub-destinations-section">
     <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Popular Destinations</h2>
-            <p class="text-muted">Explore our most booked destinations</p>
+        <div class="flyhub-section-header">
+            <h2 class="flyhub-section-title">Popular Destinations</h2>
+            <a href="<?= url('flights/search') ?>" class="flyhub-section-link">View All Destinations &rarr;</a>
         </div>
         <div class="row g-4">
-            <?php
-            $destImages = ['london', 'dubai', 'tokyo', 'sydney', 'paris', 'singapore'];
-            foreach ($destinations as $i => $dest):
-            ?>
-            <div class="col-lg-4 col-md-6">
-                <div class="destination-card">
-                    <div class="destination-img bg-primary d-flex align-items-center justify-content-center" style="height:200px;background:linear-gradient(135deg,#0d6efd,#0dcaf0)!important;">
-                        <div class="text-center text-white">
-                            <h2 class="fw-bold mb-0"><?= e($dest['code']) ?></h2>
-                            <p class="mb-0"><?= e($dest['city']) ?></p>
+            <?php foreach ($featuredDestinations as $dest): ?>
+            <div class="col-lg-3 col-md-6">
+                <a href="<?= url('flights/search' . (!empty($dest['airport_id']) ? '?to=' . $dest['airport_id'] : '')) ?>" class="flyhub-dest-card">
+                    <div class="flyhub-dest-image">
+                        <img src="<?= e($dest['image']) ?>" alt="<?= e($dest['city']) ?>" loading="lazy">
+                    </div>
+                    <div class="flyhub-dest-info">
+                        <h3 class="flyhub-dest-city"><?= e($dest['city']) ?></h3>
+                        <p class="flyhub-dest-country"><?= e($dest['country']) ?></p>
+                        <div class="flyhub-dest-price-wrap">
+                            <span class="flyhub-dest-from">From</span>
+                            <span class="flyhub-dest-price">$<?= number_format($dest['price']) ?></span>
                         </div>
                     </div>
-                    <div class="destination-body p-3">
-                        <h5 class="mb-1"><?= e($dest['city']) ?>, <?= e($dest['country']) ?></h5>
-                        <p class="text-muted small mb-2"><?= e($dest['name']) ?></p>
-                        <a href="<?= url('flights/search?to=' . $dest['id']) ?>" class="btn btn-sm btn-outline-primary">Explore Flights</a>
-                    </div>
-                </div>
+                </a>
             </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
 
-<!-- Airline Partners -->
-<section class="py-5 bg-light">
+<!-- Statistics Bar -->
+<section class="flyhub-stats-section">
     <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Our Airline Partners</h2>
-            <p class="text-muted">Fly with the world's leading airlines</p>
-        </div>
-        <div class="row g-4 justify-content-center">
-            <?php foreach ($airlines as $airline): ?>
-            <div class="col-lg-2 col-md-3 col-4 text-center">
-                <div class="airline-card p-3 bg-white rounded shadow-sm">
-                    <i class="fas fa-plane fa-2x text-primary mb-2"></i>
-                    <h6 class="mb-0 small"><?= e($airline['name']) ?></h6>
-                    <small class="text-muted"><?= e($airline['code']) ?></small>
+        <div class="flyhub-stats-bar">
+            <div class="flyhub-stat-item">
+                <div class="flyhub-stat-icon">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <div class="flyhub-stat-text">
+                    <strong>500+</strong>
+                    <span>Airlines</span>
                 </div>
             </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
-
-<!-- Why Choose Us -->
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Why Choose <?= e(config('app.name')) ?>?</h2>
-        </div>
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="feature-icon bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:80px;height:80px;">
-                    <i class="fas fa-tags fa-2x text-primary"></i>
+            <div class="flyhub-stat-item">
+                <div class="flyhub-stat-icon">
+                    <i class="fas fa-globe-americas"></i>
                 </div>
-                <h5>Best Prices</h5>
-                <p class="text-muted">Compare prices across airlines and get the best deals guaranteed.</p>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="feature-icon bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:80px;height:80px;">
-                    <i class="fas fa-shield-alt fa-2x text-success"></i>
-                </div>
-                <h5>Secure Booking</h5>
-                <p class="text-muted">Your data and payments are protected with enterprise-grade security.</p>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="feature-icon bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:80px;height:80px;">
-                    <i class="fas fa-headset fa-2x text-info"></i>
-                </div>
-                <h5>24/7 Support</h5>
-                <p class="text-muted">Our dedicated support team is always ready to assist you.</p>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="feature-icon bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:80px;height:80px;">
-                    <i class="fas fa-ticket-alt fa-2x text-warning"></i>
-                </div>
-                <h5>E-Tickets</h5>
-                <p class="text-muted">Instant e-ticket delivery with QR codes for easy check-in.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Testimonials -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">What Our Customers Say</h2>
-        </div>
-        <div class="row g-4">
-            <?php
-            $testimonials = [
-                ['name' => 'Sarah Johnson', 'text' => 'Amazing experience! Booked my family vacation in minutes. Great prices and smooth process.', 'rating' => 5],
-                ['name' => 'Michael Chen', 'text' => 'The best flight booking platform I have used. Customer support was incredibly helpful.', 'rating' => 5],
-                ['name' => 'Emma Williams', 'text' => 'Love the seat selection feature and instant e-tickets. Will definitely book again!', 'rating' => 4],
-            ];
-            foreach ($testimonials as $t):
-            ?>
-            <div class="col-lg-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <div class="text-warning mb-2">
-                            <?php for ($i = 0; $i < $t['rating']; $i++): ?><i class="fas fa-star"></i><?php endfor; ?>
-                        </div>
-                        <p class="text-muted">"<?= e($t['text']) ?>"</p>
-                        <h6 class="mb-0 fw-bold"><?= e($t['name']) ?></h6>
-                    </div>
+                <div class="flyhub-stat-text">
+                    <strong>2000+</strong>
+                    <span>Destinations</span>
                 </div>
             </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
-
-<!-- FAQ -->
-<section class="py-5" id="faq">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Frequently Asked Questions</h2>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="accordion" id="faqAccordion">
-                    <?php foreach ($faqs as $i => $faq): ?>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button <?= $i > 0 ? 'collapsed' : '' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#faq<?= $i ?>">
-                                <?= e($faq['question']) ?>
-                            </button>
-                        </h2>
-                        <div id="faq<?= $i ?>" class="accordion-collapse collapse <?= $i === 0 ? 'show' : '' ?>" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body text-muted"><?= e($faq['answer']) ?></div>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
+            <div class="flyhub-stat-item">
+                <div class="flyhub-stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="flyhub-stat-text">
+                    <strong>10M+</strong>
+                    <span>Happy Customers</span>
+                </div>
+            </div>
+            <div class="flyhub-stat-item">
+                <div class="flyhub-stat-icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <div class="flyhub-stat-text">
+                    <strong>24/7</strong>
+                    <span>Support</span>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- Contact CTA -->
-<section class="py-5 bg-primary text-white">
-    <div class="container text-center">
-        <h2 class="fw-bold mb-3">Ready to Start Your Journey?</h2>
-        <p class="lead mb-4">Book your next adventure today and experience world-class service.</p>
-        <a href="<?= url('flights/search') ?>" class="btn btn-light btn-lg px-5 me-2">Search Flights</a>
-        <a href="<?= url('contact') ?>" class="btn btn-outline-light btn-lg px-5">Contact Us</a>
     </div>
 </section>
