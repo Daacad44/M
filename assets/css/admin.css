@@ -1,0 +1,45 @@
+@import url('style.css');
+
+.admin-sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.admin-content {
+    margin-left: 260px;
+    min-height: 100vh;
+    background: #f0f2f5;
+}
+
+.admin-topbar {
+    background: #fff;
+    padding: 15px 25px;
+    border-bottom: 1px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.admin-nav .nav-link {
+    color: rgba(255,255,255,0.7);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 2px;
+    font-size: 0.9rem;
+}
+
+.admin-nav .nav-link:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+}
+
+@media (max-width: 992px) {
+    .admin-sidebar { width: 100%; position: relative; min-height: auto; }
+    .admin-content { margin-left: 0; }
+}

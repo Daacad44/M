@@ -1,0 +1,6 @@
+.env
+uploads/airlines/*
+uploads/avatars/*
+uploads/tickets/*
+!uploads/**/.gitkeep
+*.log
